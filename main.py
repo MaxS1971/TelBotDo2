@@ -56,6 +56,7 @@ def start(update, context):
     reply_markup=reply_markup
     )
     #update.send_message(chat_id=context.chat_id, text="Меню из двух столбцов", reply_markup=reply_markup1)
+    context.user_data['fstr'] = []
 
 def button(update, context):
     query = update.callback_query
@@ -83,10 +84,16 @@ def address(update, context):
 def phone(update, context):
     update.message.reply_text("Идет взлом Пентагона, тикайте...")
 
+def wikipedia_history(update, context):
+    update.message.reply_text("История поиска:")
+    fstr = '\n'.join(context.user_data['fstr'])
+    update.message.reply_text(fstr)
+
 
 def wikipedia(update, context):
     update.message.reply_text("Идет поиск в википедии...")
     print(context.args, " ".join(context.args), "=======")
+    context.user_data['fstr'].append(" ".join(context.args))
     rezult, urlrez = wiki.search_wiki(" ".join(context.args))
     update.message.reply_text(rezult + urlrez)
 
@@ -131,13 +138,14 @@ def main():
 
     # Регистрируем обработчик в диспетчере.
     # обработка команд
-    dp.add_handler(CommandHandler("start", start))
+    dp.add_handler(CommandHandler("start", start, pass_user_data=True))
     updater.dispatcher.add_handler(CallbackQueryHandler(button))
     dp.add_handler(CommandHandler("help", help))
     dp.add_handler(CommandHandler("address", address))
     dp.add_handler(CommandHandler("phone", phone))
     dp.add_handler(CommandHandler("close", close_keyboard))
-    dp.add_handler(CommandHandler("wiki", wikipedia))
+    dp.add_handler(CommandHandler("wiki", wikipedia, pass_user_data=True))
+    dp.add_handler(CommandHandler("wikihist", wikipedia_history, pass_user_data=True))
     dp.add_handler(CommandHandler("set", set_timer,
                                   pass_args=True,
                                   pass_job_queue=True,
