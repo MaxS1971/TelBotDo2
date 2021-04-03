@@ -20,14 +20,11 @@ def build_menu(buttons, n_cols,
         menu.append([footer_buttons])
     return menu
 
-
-button_list = [
-    InlineKeyboardButton("col1", callback_data=...),
-    InlineKeyboardButton("col2", callback_data=...),
-    InlineKeyboardButton("row 2", callback_data=...)
-]
-
-
+# button_list = [
+#     InlineKeyboardButton("col1", callback_data=...),
+#     InlineKeyboardButton("col2", callback_data=...),
+#     InlineKeyboardButton("row 2", callback_data=...)
+# ]
 
 reply_keyboard = [['/address','/phone'], ['/help', '/close']]
 markup = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=False)
