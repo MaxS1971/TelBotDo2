@@ -4,6 +4,7 @@ from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, KeyboardButton
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
 import wiki
+import random
 
 with open("tokenbt.txt", "r") as ftb:
     TOKEN = ftb.readline().strip()
@@ -86,14 +87,16 @@ def phone(update, context):
 
 def wikipedia_history(update, context):
     update.message.reply_text("История поиска:")
-    fstr = '\n'.join(context.user_data['fstr'])
+    fstr = ""
+    for k in context.user_data:
+        fstr += context.user_data[k] + "\n"
     update.message.reply_text(fstr)
 
 
 def wikipedia(update, context):
     update.message.reply_text("Идет поиск в википедии...")
     print(context.args, " ".join(context.args), "=======")
-    context.user_data['fstr'].append(" ".join(context.args))
+    context.user_data[str(random.randint(1000000,9999999))].append(" ".join(context.args))
     rezult, urlrez = wiki.search_wiki(" ".join(context.args))
     update.message.reply_text(rezult + urlrez)
 
