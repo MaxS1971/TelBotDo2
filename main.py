@@ -96,7 +96,7 @@ def wikipedia_history(update, context):
 def wikipedia(update, context):
     update.message.reply_text("Идет поиск в википедии...")
     print(context.args, " ".join(context.args), "=======")
-    context.user_data[str(random.randint(1000000,9999999))].append(" ".join(context.args))
+    context.user_data[str(random.randint(1000000,9999999))] = (" ".join(context.args))
     rezult, urlrez = wiki.search_wiki(" ".join(context.args))
     update.message.reply_text(rezult + urlrez)
 
