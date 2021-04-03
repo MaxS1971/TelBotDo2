@@ -2,6 +2,9 @@ from telegram.ext import Updater, MessageHandler, Filters
 from telegram.ext import CallbackContext, CommandHandler, CallbackQueryHandler
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, KeyboardButton
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+import os
+from flask import Flask, request
+server = Flask(__name__)
 
 import wiki
 
@@ -164,4 +167,7 @@ def main():
 
 # Запускаем функцию main() в случае запуска скрипта.
 if __name__ == '__main__':
+    server.debug = True
+    port = int(os.environ.get("PORT", 5000))
+    server.run(host="0.0.0.0", port=port)
     main()
